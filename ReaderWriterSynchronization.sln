@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34024.191
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Synchronization", "Synchronization\Synchronization.csproj", "{4BF16188-6574-43E5-B29E-E8F6213DFCC0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTesting", "UnitTesting\UnitTesting.csproj", "{5C827BDC-78D3-4DD0-9B6F-F67D345F8533}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0D8C8F05-0D67-44A7-90CC-A69A282FA1A8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.gitignore = .gitignore
+		CONTRIBUTING.md = CONTRIBUTING.md
+		License.txt = License.txt
+		ReadMe.md = ReadMe.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4BF16188-6574-43E5-B29E-E8F6213DFCC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BF16188-6574-43E5-B29E-E8F6213DFCC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BF16188-6574-43E5-B29E-E8F6213DFCC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BF16188-6574-43E5-B29E-E8F6213DFCC0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C827BDC-78D3-4DD0-9B6F-F67D345F8533}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C827BDC-78D3-4DD0-9B6F-F67D345F8533}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C827BDC-78D3-4DD0-9B6F-F67D345F8533}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C827BDC-78D3-4DD0-9B6F-F67D345F8533}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2ADB1AF4-4FA8-4262-9842-ECC2BD271E9A}
+	EndGlobalSection
+EndGlobal

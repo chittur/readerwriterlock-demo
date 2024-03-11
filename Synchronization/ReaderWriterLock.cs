@@ -5,7 +5,7 @@
  *
  * Product     = ReaderWriterSynchronization
  * 
- * Project     = Syncronization
+ * Project     = Synchronization
  *
  * Description = Defines a simple reader-writer lock implementation.
  *****************************************************************************/

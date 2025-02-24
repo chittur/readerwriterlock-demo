@@ -1,4 +1,4 @@
-﻿/******************************************************************************
+/******************************************************************************
  * Filename    = ReaderWriterLock.cs
  *
  * Author      = Ramaswamy Krishnan-Chittur
@@ -24,15 +24,20 @@ namespace Synchronization
         private int _readerCount;
         private readonly AutoResetEvent _noReaders;
 
+        private readonly LockPolicy _lockPolicy;
+        private readonly int _maxReaders;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ReaderWriterLock"/> class.
         /// </summary>
-        public ReaderWriterLock()
+        public ReaderWriterLock(LockPolicy lockPolicy = LockPolicy.Basic, int maxReaders = 5 /* A reasonable balance to avoid writer starvation */)
         {
             _readerLock = new object();
             _writerLock = new object();
             _readerCount = 0;
             _noReaders = new AutoResetEvent(false);
+            _lockPolicy = lockPolicy;
+            _maxReaders = maxReaders;
         }
 
         /// <summary>
@@ -40,6 +45,21 @@ namespace Synchronization
         /// </summary>
         public void EnterReadLock()
         {
+            if (_lockPolicy == LockPolicy.MaxReadersBeforeWriter)
+            {
+                Monitor.Enter(_readerLock);
+                if (_readerCount >= _maxReaders)
+                {
+                    Monitor.Exit(_readerLock);
+                    EnterWriteLock();
+                    ExitWriteLock();
+                }
+                else
+                {
+                    Monitor.Exit(_readerLock);
+                }
+            }
+
             Monitor.Enter(_writerLock);
             Monitor.Enter(_readerLock);
             ++_readerCount;
@@ -86,5 +106,11 @@ namespace Synchronization
             Debug.Assert(Monitor.IsEntered(_writerLock));
             Monitor.Exit(_writerLock);
         }
+    }
+
+    public enum LockPolicy
+    {
+        Basic,
+        MaxReadersBeforeWriter
     }
 }

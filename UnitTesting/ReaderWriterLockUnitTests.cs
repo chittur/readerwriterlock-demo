@@ -27,7 +27,7 @@ namespace UnitTesting
         [TestMethod]
         public void BasicTest()
         {
-            ReaderWriterLock readerWriterLock = new();
+            ReaderWriterLock readerWriterLock = new(Synchronization.LockPolicy.Basic);
             Logger.LogMessage("Entering read lock.");
             readerWriterLock.EnterReadLock();
             Logger.LogMessage("Entered read lock.");
@@ -48,7 +48,7 @@ namespace UnitTesting
         [TestMethod]
         public void BasicTestMultipleThreads()
         {
-            ReaderWriterLock readerWriterLock = new();
+            ReaderWriterLock readerWriterLock = new(Synchronization.LockPolicy.Basic);
             Thread thread1 = new(() =>
             {
                 Logger.LogMessage("Thread1: Entering read lock.");
@@ -101,6 +101,57 @@ namespace UnitTesting
             thread2.Join();
             thread3.Join();
             thread4.Join();
+
+            Logger.LogMessage("Threads completed.");
+        }
+
+        /// <summary>
+        /// Test for MaxReadersBeforeWriter policy.
+        /// </summary>
+        [TestMethod]
+        public void TestMaxReadersBeforeWriter()
+        {
+            ReaderWriterLock readerWriterLock = new(Synchronization.LockPolicy.MaxReadersBeforeWriter, 2);
+            Thread thread1 = new(() =>
+            {
+                Logger.LogMessage("Thread1: Entering read lock.");
+                readerWriterLock.EnterReadLock();
+                Logger.LogMessage("Thread1: Entered read lock.");
+                Thread.Sleep(GetRandomDelay());
+                Logger.LogMessage("Thread1: Exiting read lock.");
+                readerWriterLock.ExitReadLock();
+                Logger.LogMessage("Thread1: Exited read lock.");
+            });
+            Thread thread2 = new(() =>
+            {
+                Logger.LogMessage("Thread2: Entering read lock.");
+                readerWriterLock.EnterReadLock();
+                Logger.LogMessage("Thread2: Entered read lock.");
+                Thread.Sleep(GetRandomDelay());
+                Logger.LogMessage("Thread2: Exiting read lock.");
+                readerWriterLock.ExitReadLock();
+                Logger.LogMessage("Thread2: Exited read lock.");
+            });
+            Thread thread3 = new(() =>
+            {
+                Logger.LogMessage("Thread3: Entering write lock.");
+                readerWriterLock.EnterWriteLock();
+                Logger.LogMessage("Thread3: Entered write lock.");
+                Thread.Sleep(GetRandomDelay());
+                Logger.LogMessage("Thread3: Exiting write lock.");
+                readerWriterLock.ExitWriteLock();
+                Logger.LogMessage("Thread3: Exited write lock.");
+            });
+
+            Logger.LogMessage("Starting threads.");
+            thread1.Start();
+            thread2.Start();
+            thread3.Start();
+
+            Logger.LogMessage("Waiting for threads to complete.");
+            thread1.Join();
+            thread2.Join();
+            thread3.Join();
 
             Logger.LogMessage("Threads completed.");
         }
